@@ -81,7 +81,7 @@ class SimpleTransform(object):
             if gpu_device is not None:
                 self.roi_align = self.roi_align.to(gpu_device)
 
-    def test_transform(self, src, bbox):
+    def test_transform(self, gsrc, bbox):
         xmin, ymin, xmax, ymax = bbox
         center, scale = _box_to_center_scale(
             xmin, ymin, xmax - xmin, ymax - ymin, self._aspect_ratio)
@@ -91,7 +91,12 @@ class SimpleTransform(object):
         inp_h, inp_w = input_size
 
         trans = get_affine_transform(center, scale, 0, [inp_w, inp_h])
-        img = cv2.warpAffine(src, trans, (int(inp_w), int(inp_h)), flags=cv2.INTER_LINEAR)
+        # img = cv2.warpAffine(src, trans, (int(inp_w), int(inp_h)), flags=cv2.INTER_LINEAR)
+        # gsrc = cv2.cuda_GpuMat()
+        # gsrc.upload(src)
+        gimg = cv2.cuda.warpAffine(gsrc, trans, (int(inp_w), int(inp_h)), flags=cv2.INTER_LINEAR)
+        img = gimg.download()
+        # return im_to_torch(np.ones(shape=(256, 192, 3))), bbox
         bbox = _center_scale_to_box(center, scale)
 
         img = im_to_torch(img)

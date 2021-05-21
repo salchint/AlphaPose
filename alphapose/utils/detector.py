@@ -258,9 +258,13 @@ class DetectionLoader():
                     continue
                 # imght = orig_img.shape[0]
                 # imgwidth = orig_img.shape[1]
-                for i, box in enumerate(boxes):
-                    inps[i], cropped_box = self.transformation.test_transform(orig_img, box)
-                    cropped_boxes[i] = torch.FloatTensor(cropped_box)
+                gsrc = cv2.cuda_GpuMat()
+                gsrc.upload(orig_img)
+                for j, box in enumerate(boxes):
+                    # cropped_boxes[j] = torch.FloatTensor([1, 2, 3, 4])
+                    # inps[j], cropped_box = self.transformation.test_transform(orig_img, box)
+                    inps[j], cropped_box = self.transformation.test_transform(gsrc, box)
+                    cropped_boxes[j] = torch.FloatTensor(cropped_box)
 
                 # inps, cropped_boxes = self.transformation.align_transform(orig_img, boxes)
 
