@@ -1,3 +1,5 @@
+# cython: language_level=3, c_string_type=unicode, c_string_encoding=utf8
+
 from __future__ import division
 
 import torch

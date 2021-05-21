@@ -1,3 +1,5 @@
+# cython: language_level=3, c_string_type=unicode, c_string_encoding=utf8
+
 # -----------------------------------------------------
 # Copyright (c) Shanghai Jiao Tong University. All rights reserved.
 # Written by Jiefeng Li (jeff.lee.sjtu@gmail.com)
