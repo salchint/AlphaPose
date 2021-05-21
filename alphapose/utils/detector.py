@@ -42,7 +42,8 @@ class DetectionLoader():
         self.num_batches = self.datalen // batchSize + leftover
 
         self._input_size = cfg.DATA_PRESET.IMAGE_SIZE
-        self._output_size = cfg.DATA_PRESET.HEATMAP_SIZE
+        # self._output_size = cfg.DATA_PRESET.HEATMAP_SIZE
+        self._output_size = cfg.DATA_PRESET.IMAGE_SIZE
 
         self._sigma = cfg.DATA_PRESET.SIGMA
 
